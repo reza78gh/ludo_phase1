@@ -6,11 +6,11 @@ class Person:
         self.name = name
         self.color = color
 
-        def term(plyer_li,pvi_p=None):
-            if pvi_p:
-                return plyer_li[plyer_li.index(pvi_p)+1]
-            else:
-                return plyer_li[0]
+    def term(plyer_li,pvi_p=None):
+        if pvi_p:
+            return plyer_li[plyer_li.index(pvi_p)+1]
+        else:
+            return plyer_li[0]
 
 
 

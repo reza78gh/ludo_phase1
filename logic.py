@@ -37,3 +37,24 @@ class Bead:
         return [Bead(color, i) for i in range(1, 5)]
 
 
+# todo: only one obj
+class Base:
+    base = []
+    li_out = []
+    li_in_home = []
+
+    @staticmethod
+    def creat_base(*args):
+        Base.base = ['e' for _ in range(24)]
+        for li in args:
+            for obj in li:
+                if isinstance(obj, Bead):
+                    Base.li_out.append(obj)
+                else:
+                    raise Exception('obj not in class Bead')
+        print(args)
+        #return base 
+        
+    @staticmethod
+    def check_place(place):
+        return Base.base[place]

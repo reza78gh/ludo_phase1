@@ -9,21 +9,23 @@ class Color(enum.Enum):
 
 
 class Person:
-    term = None
+    turn = None
+    player_li = []
     
     def __init__(self, name, color):
         self.name = name
         self.color = color
+        Person.player_li.append(self)
 
     @staticmethod
-    def next_term(plyer_li):
-        if Person.term:
+    def next_turn():
+        if Person.turn:
             try:
-                Person.term = plyer_li[plyer_li.index(Person.term)+1]
+                Person.turn = Person.player_li[Person.player_li.index(Person.turn)+1]
             except IndexError:
-                Person.term = plyer_li[0]
+                Person.turn = Person.player_li[0]
         else:
-            Person.term = plyer_li[0]
+            Person.turn = Person.player_li[0]
 
 
 

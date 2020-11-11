@@ -1,8 +1,8 @@
 from logic import Base ,Bead, Person
 
-# win
+# todo: check win
 def check_move(roll,bead):
-    if bead.ownner == Person.term:
+    if bead.ownner == Person.turn:
         if not(bead.out and bead.in_home):
             target = bead.position + roll
             who_in_target = Base.check_place(target)
@@ -16,7 +16,7 @@ def check_move(roll,bead):
                     bead.posation = target
                     who_in_target.posation = None
                     Base.set_posation(bead,target,who_in_target)
-                    Person.term(Person.term)
+                    Person.next_turn()
                     # todo: remov enemy bead
             else:
                 bead.posation = target
@@ -30,3 +30,7 @@ def check_move(roll,bead):
     else:
         # not owner
         pass
+
+
+def check_win(bead):
+    pass

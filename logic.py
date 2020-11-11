@@ -9,19 +9,22 @@ class Color(enum.Enum):
 
 
 class Person:
+    term = None
+    
     def __init__(self, name, color):
         self.name = name
         self.color = color
 
     @staticmethod
-    def term(plyer_li, pvi_p=None):
-        if pvi_p:
+    def next_term(plyer_li):
+        if Person.term:
             try:
-                return plyer_li[plyer_li.index(pvi_p)+1]
+                Person.term = plyer_li[plyer_li.index(Person.term)+1]
             except IndexError:
-                return plyer_li[0]
+                Person.term = plyer_li[0]
         else:
-            return plyer_li[0]
+            Person.term = plyer_li[0]
+
 
 
 class Bead:
@@ -58,3 +61,9 @@ class Base:
     @staticmethod
     def check_place(place):
         return Base.base[place]
+
+    def set_posation(self,posation,target_bead=None):
+        if target_bead:
+            Base.li_out.append(target_bead)
+        Base[posation]=self
+        

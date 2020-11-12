@@ -37,6 +37,26 @@ class Bead:
         self.in_game = in_game
         self.in_home = in_home
 
+
+    def check_win(self,roll):
+        color = self.color
+        if color == 'red':
+            win_place = Base.red_win
+        elif color == 'blue':
+            win_place = Base.blue_win
+        elif color == 'green':
+            win_place = Base.green_win
+        elif color == 'yellow':
+            win_place = Base.yellow_win
+        
+        if win_place - self.postion <= 6:
+            if self.postion + roll -1 == win_place:
+                return 'win'
+            else:
+                return 'stop'
+        else:
+            return 1
+
     @staticmethod
     def creat_beads(color):
         return [Bead(color, i) for i in range(1, 5)]
@@ -44,6 +64,10 @@ class Bead:
 
 # todo: only one obj
 class Base:
+    red_win = 10
+    blue_win = 20
+    green_win = 30
+    yellow_win = 40
     base = []
     li_out = []
     li_in_home = []
@@ -68,4 +92,6 @@ class Base:
         if target_bead:
             Base.li_out.append(target_bead)
         Base[posation]=self
+        
+
         

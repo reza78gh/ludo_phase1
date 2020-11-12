@@ -4,7 +4,21 @@ from logic import Base ,Bead, Person
 def check_move(roll,bead):
     if bead.ownner == Person.turn:
         if not(bead.out and bead.in_home):
+            check_w = Bead.check_win(bead,roll)
+            if check_w == 'win':
+                Base.base[bead.postion]='e'
+                bead.postion = None
+                bead.in_home = True
+                Base.li_in_home.append(bead)
+                # move pyqt
+                return
+            elif check_w == 'stop':
+                # again
+                return
+
             target = bead.position + roll
+            if target > 24:
+                target -= 24
             who_in_target = Base.check_place(target)
             if isinstance(who_in_target,Bead):
                 bead_color = bead.color
@@ -30,7 +44,3 @@ def check_move(roll,bead):
     else:
         # not owner
         pass
-
-
-def check_win(bead):
-    pass

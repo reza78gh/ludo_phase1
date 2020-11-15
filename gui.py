@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'untitled3.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
+from move import check_move
+import dice
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
+roll = None
+permis_roll = True
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -550,12 +546,81 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setFont(QtGui.QFont('Times', 15))
+        self.statusbar.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.pushButton_1.clicked.connect(self.move)
+        self.pushButton_2.clicked.connect(self.move)
+        self.pushButton_3.clicked.connect(self.move)
+        self.pushButton_4.clicked.connect(self.move)
+        self.pushButton_5.clicked.connect(self.move)
+        self.pushButton_6.clicked.connect(self.move)
+        self.pushButton_7.clicked.connect(self.move)
+        self.pushButton_8.clicked.connect(self.move)
+        self.pushButton_9.clicked.connect(self.move)
+        self.pushButton_10.clicked.connect(self.move)
+        self.pushButton_11.clicked.connect(self.move)
+        self.pushButton_12.clicked.connect(self.move)
+        self.pushButton_13.clicked.connect(self.move)
+        self.pushButton_14.clicked.connect(self.move)
+        self.pushButton_15.clicked.connect(self.move)
+        self.pushButton_16.clicked.connect(self.move)
+        self.pushButton_17.clicked.connect(self.move)
+        self.pushButton_18.clicked.connect(self.move)
+        self.pushButton_19.clicked.connect(self.move)
+        self.pushButton_20.clicked.connect(self.move)
+        self.pushButton_21.clicked.connect(self.move)
+        self.pushButton_22.clicked.connect(self.move)
+        self.pushButton_23.clicked.connect(self.move)
+        self.pushButton_24.clicked.connect(self.move)
+        self.pushButton_25.clicked.connect(self.move)
+        self.pushButton_33.clicked.connect(self.roll_dice)
+
+
+    def move(self):
+            global roll
+            global permis_roll
+            clicked_btn = MainWindow.sender()
+            print(clicked_btn.objectName())
+            print(roll)
+            if roll:
+                a = check_move(int(clicked_btn.objectName().split('_')[1]),roll).split()
+                if a[0] == 'move':
+                        print(roll,a)
+                        roll = None
+                        permis_roll = True
+                        btn=MainWindow.findChild(QtWidgets.QPushButton,"pushButton_"+a[2])
+                        btn.setIcon(QtGui.QIcon("icon/bluePlayer.png"))
+                        clicked_btn.setIcon(QtGui.QIcon(""))
+                        self.label_7.setText('done')
+                        # QtCore.QTimer.singleShot(4500,self.clear)
+                        if a[3]=='l':
+                                self.label.setText(str(int(self.label.text())-1))
+                if a[0]=='stop':
+                        roll = None
+                        permis_roll = True
+                if a[0]=='move_win':
+                        self.pushButton_29.setIcon(QtGui.QIcon("icon/bluePlayer.png"))
+                        clicked_btn.setIcon(QtGui.QIcon(""))
+
+            else:
+                self.statusbar.showMessage('roll dick',3000)
+                
+    def roll_dice(self):
+            global roll
+            global permis_roll
+            if permis_roll:
+                roll = dice.roll_the_dice()
+                self.label_8.setText(str(roll))
+                permis_roll = False
+
+    def clear(self):
+            self.label_7.clear()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -575,6 +640,7 @@ class Ui_MainWindow(object):
         self.player_4.setText(_translate("MainWindow", "Player"))
 
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -583,3 +649,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+

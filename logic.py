@@ -50,12 +50,12 @@ class Bead:
             win_place = Base.yellow_win
         
         if win_place - self.postion <= 6:
-            if self.postion + roll -1 == win_place:
+            if self.postion + roll -1 < win_place:
+                return 'move'
+            elif self.postion + roll -1 == win_place:
                 return 'win'
             else:
                 return 'stop'
-        else:
-            return 1
 
     @staticmethod
     def creat_beads(color):
@@ -65,12 +65,17 @@ class Bead:
 # todo: only one obj
 class Base:
     red_win = 10
-    blue_win = 20
+    blue_win = 24
     green_win = 30
     yellow_win = 40
+    red_start = 7
+    blue_start = 1
+    green_start = 13
+    yellow_start = 19
     base = []
     li_out = []
     li_in_home = []
+    in_home_blue = [Bead('blue', 2)]
 
     @staticmethod
     def creat_base(*args):
@@ -86,12 +91,13 @@ class Base:
         
     @staticmethod
     def check_place(place):
-        return Base.base[place]
+        return Base.base[int(place-1)]
 
     def set_posation(self,posation,target_bead=None):
         if target_bead:
             Base.li_out.append(target_bead)
-        Base[posation]=self
+        Base.base[posation-1]=self
+        self.postion = posation
         
 
-        
+Base.creat_base()

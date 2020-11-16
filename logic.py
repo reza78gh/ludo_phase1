@@ -1,6 +1,5 @@
 import enum
 
-
 class Color(enum.Enum):
     RED = 'red'
     GREEN = 'green'
@@ -48,8 +47,9 @@ class Bead:
             win_place = Base.green_win
         elif color == 'yellow':
             win_place = Base.yellow_win
+        print('what the fuck: ',self.postion,win_place)
         
-        if win_place - self.postion <= 6:
+        if 0 < win_place - self.postion <= 6:
             if self.postion + roll -1 < win_place:
                 return 'move'
             elif self.postion + roll -1 == win_place:
@@ -64,7 +64,7 @@ class Bead:
 
 # todo: only one obj
 class Base:
-    red_win = 10
+    red_win = 6
     blue_win = 24
     green_win = 30
     yellow_win = 40
@@ -75,7 +75,8 @@ class Base:
     base = []
     li_out = []
     li_in_home = []
-    in_home_blue = [Bead('blue', 2)]
+    in_home_blue = []
+    in_home_red = []
 
     @staticmethod
     def creat_base(*args):
@@ -101,3 +102,14 @@ class Base:
         
 
 Base.creat_base()
+rb = Bead.creat_beads('red')
+bb = Bead.creat_beads('blue')
+ali = Person('ali','red')
+reza = Person('reza','blue')
+Person.player_li = [reza, ali]
+Person.next_turn()
+Base.in_home_blue = bb
+Base.in_home_red = rb
+# print(Person.turn.color)
+# print(Base.in_home_blue)
+# print(Color.GREEN)

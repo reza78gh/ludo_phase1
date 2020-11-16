@@ -1,5 +1,6 @@
 from move import check_move
-import dice
+import dice 
+from logic import Person
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -579,14 +580,15 @@ class Ui_MainWindow(object):
         self.pushButton_23.clicked.connect(self.move)
         self.pushButton_24.clicked.connect(self.move)
         self.pushButton_25.clicked.connect(self.move)
+        self.pushButton_26.clicked.connect(self.move)
         self.pushButton_33.clicked.connect(self.roll_dice)
+        self.turn.setText(Person.turn.name)
 
 
     def move(self):
             global roll
             global permis_roll
             clicked_btn = MainWindow.sender()
-            print(clicked_btn.objectName())
             print(roll)
             if roll:
                 a = check_move(int(clicked_btn.objectName().split('_')[1]),roll).split()
@@ -594,23 +596,35 @@ class Ui_MainWindow(object):
                         print(roll,a)
                         roll = None
                         permis_roll = True
-                        btn=MainWindow.findChild(QtWidgets.QPushButton,"pushButton_"+a[2])
-                        btn.setIcon(QtGui.QIcon("icon/bluePlayer.png"))
                         clicked_btn.setIcon(QtGui.QIcon(""))
-                        self.label_7.setText('done')
-                        # QtCore.QTimer.singleShot(4500,self.clear)
-                        if a[3]=='l':
-                                self.label.setText(str(int(self.label.text())-1))
-                if a[0]=='stop':
+                        self.set_icon(a[1],a[2],a[3])
+                        
+                elif a[0]=='stop':
                         roll = None
                         permis_roll = True
-                if a[0]=='move_win':
+                elif a[0]=='move_win':
                         self.pushButton_29.setIcon(QtGui.QIcon("icon/bluePlayer.png"))
                         clicked_btn.setIcon(QtGui.QIcon(""))
-
+                
+                self.turn.setText(Person.turn.name)      
+                self.turn.setStyleSheet(f'color:{Person.turn.color};') 
             else:
                 self.statusbar.showMessage('roll dick',3000)
                 
+    def set_icon(self,color,target,option):
+            btn=MainWindow.findChild(QtWidgets.QPushButton,"pushButton_"+target)
+            btn.setIcon(QtGui.QIcon("icon/"+color+"Player.png"))
+            # QtCore.QTimer.singleShot(4500,self.clear)
+            if option =='l':
+                    if color == 'blue':
+                        self.label.setText(str(int(self.label.text())-1))
+                    elif color == 'red':
+                        self.label_2.setText(str(int(self.label_2.text())-1))
+                    elif color == 'green':
+                        self.label_3.setText(str(int(self.label_3.text())-1))
+                    elif color == 'yellow':
+                        self.label_4.setText(str(int(self.label_4.text())-1))
+
     def roll_dice(self):
             global roll
             global permis_roll
@@ -621,6 +635,7 @@ class Ui_MainWindow(object):
 
     def clear(self):
             self.label_7.clear()
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

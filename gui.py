@@ -562,37 +562,37 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.pushButton_1.clicked.connect(self.move)
-        self.pushButton_2.clicked.connect(self.move)
-        self.pushButton_3.clicked.connect(self.move)
-        self.pushButton_4.clicked.connect(self.move)
-        self.pushButton_5.clicked.connect(self.move)
-        self.pushButton_6.clicked.connect(self.move)
-        self.pushButton_7.clicked.connect(self.move)
-        self.pushButton_8.clicked.connect(self.move)
-        self.pushButton_9.clicked.connect(self.move)
-        self.pushButton_10.clicked.connect(self.move)
-        self.pushButton_11.clicked.connect(self.move)
-        self.pushButton_12.clicked.connect(self.move)
-        self.pushButton_13.clicked.connect(self.move)
-        self.pushButton_14.clicked.connect(self.move)
-        self.pushButton_15.clicked.connect(self.move)
-        self.pushButton_16.clicked.connect(self.move)
-        self.pushButton_17.clicked.connect(self.move)
-        self.pushButton_18.clicked.connect(self.move)
-        self.pushButton_19.clicked.connect(self.move)
-        self.pushButton_20.clicked.connect(self.move)
-        self.pushButton_21.clicked.connect(self.move)
-        self.pushButton_22.clicked.connect(self.move)
-        self.pushButton_23.clicked.connect(self.move)
-        self.pushButton_24.clicked.connect(self.move)
-        self.pushButton_25.clicked.connect(self.move)
-        self.pushButton_26.clicked.connect(self.move)
+        self.pushButton_1.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_2.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_3.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_4.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_5.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_6.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_7.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_8.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_9.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_10.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_11.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_12.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_13.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_14.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_15.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_16.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_17.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_18.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_19.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_20.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_21.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_22.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_23.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_24.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_25.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_26.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_33.clicked.connect(self.roll_dice)
         self.turn.setText(Person.turn.name)
         self.turn.setStyleSheet(f'color:{Person.turn.color};')
 
-    def move(self):
+    def move(self,MainWindow):
         global roll
         global permis_roll
         clicked_btn = MainWindow.sender()
@@ -605,7 +605,7 @@ class Ui_MainWindow(object):
                 self.label_8.setText("-")
                 permis_roll = True
                 clicked_btn.setIcon(QtGui.QIcon(""))
-                self.set_icon(a[1], a[2], a[3])
+                self.set_icon(a[1], a[2], a[3],MainWindow)
 
             elif a[0] == 'stop':
                 if len(a)>1:
@@ -644,7 +644,7 @@ class Ui_MainWindow(object):
             msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             msgBox.exec_()
 
-    def set_icon(self, color, target, option):
+    def set_icon(self, color, target, option,MainWindow):
         btn = MainWindow.findChild(QtWidgets.QPushButton, "pushButton_"+target)
         btn.setIcon(QtGui.QIcon("icon/"+color+"Player.png"))
         # QtCore.QTimer.singleShot(4500,self.clear)
@@ -697,12 +697,3 @@ class Ui_MainWindow(object):
             lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
             lable_player.setText(f"{player.name}")
             lable_player.setStyleSheet(f'color:{player.color};')
-
-
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

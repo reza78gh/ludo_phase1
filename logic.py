@@ -47,15 +47,16 @@ class Bead:
             win_place = Base.green_win
         elif color == 'yellow':
             win_place = Base.yellow_win
-        print('what the fuck: ',self.postion,win_place)
         
-        if 0 < win_place - self.postion <= 6:
+        if 0 <= win_place - self.postion <= 6:
             if self.postion + roll -1 < win_place:
                 return 'move'
             elif self.postion + roll -1 == win_place:
                 return 'win'
             else:
                 return 'stop'
+        else:
+            return 'move'
 
     @staticmethod
     def creat_beads(color):
@@ -73,22 +74,22 @@ class Base:
     green_start = 13
     yellow_start = 19
     base = []
-    li_out = []
-    li_in_home = []
+    out_blue = []
+    out_red = []
     in_home_blue = []
     in_home_red = []
 
     @staticmethod
     def creat_base(*args):
         Base.base = ['e' for _ in range(24)]
-        for li in args:
-            for obj in li:
-                if isinstance(obj, Bead):
-                    Base.li_out.append(obj)
-                else:
-                    raise Exception('obj not in class Bead')
-        print(args)
-        #return base 
+        # for li in args:
+        #     for obj in li:
+        #         if isinstance(obj, Bead):
+        #             Base.li_out.append(obj)
+        #         else:
+        #             raise Exception('obj not in class Bead')
+        # print(args)
+        # #return base 
         
     @staticmethod
     def check_place(place):
@@ -96,9 +97,40 @@ class Base:
 
     def set_posation(self,posation,target_bead=None):
         if target_bead:
-            Base.li_out.append(target_bead)
+            color = target_bead.color
+            if color == 'blue':
+                Base.out_blue.append(target_bead)
+            if color == 'red':
+                Base.out_red.append(target_bead)
+            if color == 'green':
+                Base.out_green.append(target_bead)
+            if color == 'yellow':
+                Base.out_yellow.append(target_bead)
         Base.base[posation-1]=self
         self.postion = posation
+
+    @staticmethod
+    def get_list(color,type_list):
+        if color == 'blue':
+            if type_list == 'out':
+                return Base.out_blue
+            else:
+                return Base.in_home_blue
+        elif color == 'red':
+            if type_list == 'out':
+                return Base.out_red
+            else:
+                return Base.in_home_red
+        elif color == 'green':
+            if type_list == 'out':
+                return Base.out_green
+            else:
+                return Base.in_home_green
+        elif color == 'yellow':
+            if type_list == 'out':
+                return Base.out_yellow
+            else:
+                return Base.in_home_yellow
         
 
 Base.creat_base()
@@ -108,8 +140,7 @@ ali = Person('ali','red')
 reza = Person('reza','blue')
 Person.player_li = [reza, ali]
 Person.next_turn()
-Base.in_home_blue = bb
-Base.in_home_red = rb
+Base.out_blue = bb
+Base.out_red = rb
 # print(Person.turn.color)
 # print(Base.in_home_blue)
-# print(Color.GREEN)

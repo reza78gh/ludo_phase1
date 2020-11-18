@@ -1,53 +1,53 @@
 from logic import Base ,Bead, Person
 
-# todo: check win
+
 def check_move(place,roll):
     print('place clicked: ',place)
-    # Person.next_turn() for all
     if place > 24 :
         if place == 25:
-            print('here 24')
-            li = Base.in_home_blue
-            if li and Person.turn.color == 'blue':
-                bead = li[0]
-                target = Base.check_place(Base.blue_start)
-                if target != 'e':
-                    if bead.color == target.color:
-                        return 'stop'
-                    else:
-                        Base.set_posation(bead,Base.blue_start,target)
-                        li.remove(li[0])
-                        Person.next_turn()
-                        return f'move blue {Base.blue_start} l'
-                Base.set_posation(bead,Base.blue_start)
-                li.remove(li[0])
-                Person.next_turn()
-                return f'move blue {Base.blue_start} l'
-            else:
-                return 'stop'
+            if roll == 6:
+                li = Base.out_blue
+                if li and Person.turn.color == 'blue':
+                    bead = li[0]
+                    target = Base.check_place(Base.blue_start)
+                    if target != 'e':
+                        if bead.color == target.color:
+                            return 'stop blue'
+                        else:
+                            Base.set_posation(bead,Base.blue_start,target)
+                            li.remove(li[0])
+                            Person.next_turn()
+                            return f'move blue {Base.blue_start} l{target.color}'
+                    Base.set_posation(bead,Base.blue_start)
+                    li.remove(li[0])
+                    Person.next_turn()
+                    return f'move blue {Base.blue_start} l'
+            # if roll !=6 or out empty or not turn this player
+            return 'stop blue'
 
         elif place == 26:
-            li = Base.in_home_red
-            if li and Person.turn.color == 'red':
-                bead = li[0]
-                target = Base.check_place(Base.blue_start)
-                if target != 'e':
-                    if bead.color == target.color:
-                        return 'stop'
-                    else:
-                        Base.set_posation(bead,Base.red_start,target)
-                        li.remove(li[0])
-                        Person.next_turn()
-                        return f'move red {Base.red_start} l'
-                Base.set_posation(bead,Base.red_start)
-                li.remove(li[0])
-                Person.next_turn()
-                return f'move red {Base.red_start} l'
-            else:
-                'stop'
-
-        if place == 27:
-            li = Base.in_home_green
+            if roll == 6:
+                li = Base.out_red
+                if li and Person.turn.color == 'red':
+                    bead = li[0]
+                    target = Base.check_place(Base.red_start)
+                    if target != 'e':
+                        if bead.color == target.color:
+                            return 'stop red'
+                        else:
+                            Base.set_posation(bead,Base.red_start,target)
+                            li.remove(li[0])
+                            Person.next_turn()
+                            return f'move red {Base.red_start} l{target.color}'
+                    Base.set_posation(bead,Base.red_start)
+                    li.remove(li[0])
+                    Person.next_turn()
+                    return f'move red {Base.red_start} l'
+               
+            return 'stop red'
+'''  ==========================not complet====================
+        elif place == 27:
+            li = Base.out_green
             if li:
                 bead = li[0]
                 target = Base.check_place(Base.yellow_start)
@@ -64,8 +64,8 @@ def check_move(place,roll):
             else:
                 return 'stop'
 
-        if place == 28:
-            li = Base.in_home_yellow
+        elif place == 28:
+            li = Base.out_yellow
             if li:
                 bead = li[0]
                 target = Base.check_place(Base.yellow_start)
@@ -81,22 +81,25 @@ def check_move(place,roll):
                 return 'move','yellow',Base.yellow_start
             else:
                 return 'stop'
-    if place < 25:
-        bead = Base.check_place(place)
-        print(bead.color)
-        print(Person.turn.color)
+'''
+    bead = Base.check_place(place)
+    print(Person.turn.color)
+    if isinstance(bead,Bead):
         if bead.color == Person.turn.color:
             check_w = Bead.check_win(bead,roll)
             if check_w == 'win':
                 Base.base[bead.postion-1]='e'
                 bead.postion = None
                 bead.in_home = True
-                Base.li_in_home.append(bead)
+                in_home_list = Base.get_list(bead.color,'home')
+                in_home_list.append(bead)
                 print('win')
-                return 'move_win'
+                Base.base[place-1]='e'
+                Person.next_turn()
+                return f'move_win {bead.color}'
             elif check_w == 'stop':
                 print('near home')
-                return 'stop'
+                return f'stop {bead.color}'
 
 
             target = bead.postion + roll
@@ -107,15 +110,14 @@ def check_move(place,roll):
                 bead_color = bead.color
                 color_target = who_in_target.color
                 if bead_color == color_target:
-                    print('hre stop 99')
-                    return 'stop'  
+                    return f'stop {bead.color}'  
                 else:
                     bead.posation = target
                     who_in_target.posation = None
                     Base.set_posation(bead,target,who_in_target)
                     Base.base[place-1]='e'
                     Person.next_turn()
-                    return f'move {bead_color} {target} n'
+                    return f'move {bead_color} {target} n{who_in_target.color}'
             else:
                 bead.posation = target
                 Base.set_posation(bead,target)
@@ -123,9 +125,33 @@ def check_move(place,roll):
                 print(Base.base)
                 Person.next_turn()
                 print(Person.turn.name)
+                print('inhome',Base.in_home_blue,Base.in_home_red)
                 return f'move {bead.color} {target} n'
 
         else:
             print('not owner')
-            return 'stop'
-            
+            return f'stop'
+    else:
+        print('empety home')    
+        return f'stop'
+
+def moveable(color,roll):
+        for bead_in_map in Base.base:
+            if isinstance(bead_in_map,Bead):
+                if bead_in_map.color == color:
+                    if Bead.check_win(bead_in_map,roll) == 'move':
+                        target = bead_in_map.postion + roll
+                        if target > 24:
+                            target -= 24
+                        bead_in_target = Base.check_place(target)
+                        if isinstance(bead_in_target,Bead):
+                            if bead_in_target.color != bead_in_map.color:
+                                return True
+                        else:
+                            return True
+        li = Base.get_list(color,'out')
+        if li and roll == 6:
+            return True
+        return False
+
+

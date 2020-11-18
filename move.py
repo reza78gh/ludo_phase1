@@ -45,7 +45,7 @@ def check_move(place,roll):
                     return f'move red {Base.red_start} l'
                
             return 'stop red'
-'''  ==========================not complet====================
+    #==========================not complet====================
         elif place == 27:
             li = Base.out_green
             if li:
@@ -80,8 +80,9 @@ def check_move(place,roll):
                 li.remove(li[0])
                 return 'move','yellow',Base.yellow_start
             else:
-                return 'stop'
-'''
+                return 'stop' 
+        #===============================================      
+
     bead = Base.check_place(place)
     print(Person.turn.color)
     if isinstance(bead,Bead):

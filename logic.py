@@ -114,22 +114,22 @@ class Base:
         if color == 'blue':
             if type_list == 'out':
                 return Base.out_blue
-            else:
+            elif type_list == 'home':
                 return Base.in_home_blue
         elif color == 'red':
             if type_list == 'out':
                 return Base.out_red
-            else:
+            elif type_list == 'home':
                 return Base.in_home_red
         elif color == 'green':
             if type_list == 'out':
                 return Base.out_green
-            else:
+            elif type_list == 'home':
                 return Base.in_home_green
         elif color == 'yellow':
             if type_list == 'out':
                 return Base.out_yellow
-            else:
+            elif type_list == 'home':
                 return Base.in_home_yellow
         
 

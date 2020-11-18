@@ -1,5 +1,5 @@
 from move import check_move , moveable
-import dice
+import dice, check_finay_win
 from logic import Person
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -610,12 +610,13 @@ class Ui_MainWindow(object):
             elif a[0] == 'stop':
                 if len(a)>1:
                         if moveable(a[1], roll):
-                                print('any way')
+                            print('any way')
                         else:
-                                print('no way')
-                                roll = None
-                                permis_roll = True
-                                Person.next_turn()
+                            print('no way')
+                            roll = None
+                            self.label_8.setText("-")
+                            permis_roll = True
+                            Person.next_turn()
             elif a[0] == 'move_win':
                 if a[1] == 'blue':
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_29')
@@ -633,6 +634,15 @@ class Ui_MainWindow(object):
             self.turn.setStyleSheet(f'color:{Person.turn.color};')
         else:
             self.statusbar.showMessage('roll dick', 3000)
+
+        player_win = check_finay_win.finaly_win()
+        if check_finay_win.finaly_win():
+            msgBox = QtWidgets.QMessageBox()
+            msgBox.setIcon(QtWidgets.QMessageBox.Information)
+            msgBox.setText(f"{player_win.name} is win")
+            msgBox.setWindowTitle("End Game")
+            msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            msgBox.exec_()
 
     def set_icon(self, color, target, option):
         btn = MainWindow.findChild(QtWidgets.QPushButton, "pushButton_"+target)
@@ -687,13 +697,8 @@ class Ui_MainWindow(object):
             lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
             lable_player.setText(f"{player.name}")
             lable_player.setStyleSheet(f'color:{player.color};')
-        # self.player_1.setText(_translate("MainWindow", ))
-        # self.player_2.setText(_translate("MainWindow", "Player"))
-        # self.player_3.setText(_translate("MainWindow", "Player"))
-        # self.player_4.setText(_translate("MainWindow", "Player"))
 
 
-if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()

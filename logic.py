@@ -67,8 +67,8 @@ class Bead:
 class Base:
     red_win = 6
     blue_win = 24
-    green_win = 30
-    yellow_win = 40
+    green_win = 12
+    yellow_win = 18
     red_start = 7
     blue_start = 1
     green_start = 13
@@ -76,8 +76,13 @@ class Base:
     base = []
     out_blue = []
     out_red = []
+    out_green = []
+    out_yellow = []
+
     in_home_blue = []
     in_home_red = []
+    in_home_green = []
+    in_home_yellow = []
 
     @staticmethod
     def creat_base(*args):
@@ -136,11 +141,17 @@ class Base:
 Base.creat_base()
 rb = Bead.creat_beads('red')
 bb = Bead.creat_beads('blue')
+gb = Bead.creat_beads('green')
+yb = Bead.creat_beads('yellow')
 ali = Person('ali','red')
 reza = Person('reza','blue')
-Person.player_li = [reza, ali]
+ahmad = Person('ahmad','green')
+hasan = Person('hasan','yellow')
+Person.player_li = [reza, ali, ahmad,hasan]
 Person.next_turn()
 Base.out_blue = bb
 Base.out_red = rb
+Base.out_green = gb
+Base.out_yellow = yb
 # print(Person.turn.color)
 # print(Base.in_home_blue)

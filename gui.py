@@ -559,6 +559,25 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 70, 26))
+        self.menubar.setObjectName("menubar")
+        self.menuGame = QtWidgets.QMenu(self.menubar)
+        self.menuGame.setObjectName("menuGame")
+        self.actionAdd_Player = QtWidgets.QAction(MainWindow)
+        self.actionAdd_Player.setObjectName("actionAdd_Player")
+        self.actionStart_Game = QtWidgets.QAction(MainWindow)
+        self.actionStart_Game.setObjectName("actionStart_Game")
+        self.actionNew_Game = QtWidgets.QAction(MainWindow)
+        self.actionNew_Game.setObjectName("actionNew_Game")
+        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
+        self.menuGame.addAction(self.actionAdd_Player)
+        self.menuGame.addAction(self.actionStart_Game)
+        self.menuGame.addAction(self.actionNew_Game)
+        self.menuGame.addAction(self.actionExit)
+        self.menubar.addAction(self.menuGame.menuAction())
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -588,6 +607,8 @@ class Ui_MainWindow(object):
         self.pushButton_24.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_25.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_26.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_27.clicked.connect(lambda : self.move(MainWindow))
+        self.pushButton_28.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_33.clicked.connect(self.roll_dice)
         self.turn.setText(Person.turn.name)
         self.turn.setStyleSheet(f'color:{Person.turn.color};')
@@ -691,6 +712,11 @@ class Ui_MainWindow(object):
         self.pushButton_33.setText(_translate("MainWindow", "Roll"))
         self.label_8.setText(_translate("MainWindow", "-"))
         self.label_6.setText(_translate("MainWindow", "Players"))
+        self.menuGame.setTitle(_translate("MainWindow", "Game"))
+        self.actionAdd_Player.setText(_translate("MainWindow", "Add Player"))
+        self.actionStart_Game.setText(_translate("MainWindow", "Start Game"))
+        self.actionNew_Game.setText(_translate("MainWindow", "New Game"))
+        self.actionExit.setText(_translate("MainWindow", "Exit"))
         i = 0
         for player in Person.player_li:
             i += 1

@@ -560,7 +560,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 70, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 60, 26))
         self.menubar.setObjectName("menubar")
         self.menuGame = QtWidgets.QMenu(self.menubar)
         self.menuGame.setObjectName("menuGame")

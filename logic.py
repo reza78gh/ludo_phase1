@@ -138,20 +138,34 @@ class Base:
                 return Base.in_home_yellow
         
 
+
+def set_player(name,color):
+    Person(name,color)
+    list_beads = Base.get_list(color,'out') 
+    beads = Bead.creat_beads(color)
+    for bead in beads: list_beads.append(bead)
+    
+# def reset():
+#     Base.creat_base()
+#     player_li = []
+#     reset all
+
+
+
 Base.creat_base()
-rb = Bead.creat_beads('red')
-bb = Bead.creat_beads('blue')
+# rb = Bead.creat_beads('red')
+# bb = Bead.creat_beads('blue')
 gb = Bead.creat_beads('green')
-yb = Bead.creat_beads('yellow')
-ali = Person('ali','red')
-reza = Person('reza','blue')
+# yb = Bead.creat_beads('yellow')
+# ali = Person('ali','red')
+# reza = Person('reza','blue')
 ahmad = Person('ahmad','green')
-hasan = Person('hasan','yellow')
-Person.player_li = [reza, ali, ahmad,hasan]
+# hasan = Person('hasan','yellow')
+Person.player_li = [ahmad]
 Person.next_turn()
-Base.out_blue = bb
-Base.out_red = rb
+# Base.out_blue = bb
+# # Base.out_red = rb
 Base.out_green = gb
-Base.out_yellow = yb
+# Base.out_yellow = yb
 # print(Person.turn.color)
 # print(Base.in_home_blue)

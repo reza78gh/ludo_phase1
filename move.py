@@ -5,86 +5,92 @@ def check_move(place,roll):
     print('place clicked: ',place)
     if place > 24 :
         if place == 25:
-            if roll == 6:
-                li = Base.out_blue
-                if li and Person.turn.color == 'blue':
-                    bead = li[0]
-                    target = Base.check_place(Base.blue_start)
-                    if target != 'e':
-                        if bead.color == target.color:
-                            return 'stop blue'
-                        else:
-                            Base.set_posation(bead,Base.blue_start,target)
-                            li.remove(li[0])
-                            Person.next_turn()
-                            return f'move blue {Base.blue_start} l{target.color}'
-                    Base.set_posation(bead,Base.blue_start)
-                    li.remove(li[0])
-                    Person.next_turn()
-                    return f'move blue {Base.blue_start} l'
-            # if roll !=6 or out empty or not turn this player
-            return 'stop blue'
+            if Person.turn.color == 'blue':
+                if roll == 6:
+                    li = Base.out_blue
+                    if li and Person.turn.color == 'blue':
+                        bead = li[0]
+                        target = Base.check_place(Base.blue_start)
+                        if target != 'e':
+                            if bead.color == target.color:
+                                return 'stop blue'
+                            else:
+                                Base.set_posation(bead,Base.blue_start,target)
+                                li.remove(li[0])
+                                Person.next_turn()
+                                return f'move blue {Base.blue_start} l{target.color}'
+                        Base.set_posation(bead,Base.blue_start)
+                        li.remove(li[0])
+                        Person.next_turn()
+                        return f'move blue {Base.blue_start} l'
+                # if roll !=6 or out empty or not turn this player
+                return 'stop blue'
+            return 'stop'
 
         elif place == 26:
-            if roll == 6:
-                li = Base.out_red
-                if li and Person.turn.color == 'red':
-                    bead = li[0]
-                    target = Base.check_place(Base.red_start)
-                    if target != 'e':
-                        if bead.color == target.color:
-                            return 'stop red'
-                        else:
-                            Base.set_posation(bead,Base.red_start,target)
-                            li.remove(li[0])
-                            Person.next_turn()
-                            return f'move red {Base.red_start} l{target.color}'
-                    Base.set_posation(bead,Base.red_start)
-                    li.remove(li[0])
-                    Person.next_turn()
-                    return f'move red {Base.red_start} l'
-               
-            return 'stop red'
-            
+            if Person.turn.color == 'red':
+                if roll == 6:
+                    li = Base.out_red
+                    if li:
+                        bead = li[0]
+                        target = Base.check_place(Base.red_start)
+                        if target != 'e':
+                            if bead.color == target.color:
+                                return 'stop red'
+                            else:
+                                Base.set_posation(bead,Base.red_start,target)
+                                li.remove(li[0])
+                                Person.next_turn()
+                                return f'move red {Base.red_start} l{target.color}'
+                        Base.set_posation(bead,Base.red_start)
+                        li.remove(li[0])
+                        Person.next_turn()
+                        return f'move red {Base.red_start} l'
+                return 'stop red'
+            return 'stop'
         elif place == 27:
-            if roll == 6:
-                li = Base.out_green
-                if li and Person.turn.color == 'green':
-                    bead = li[0]
-                    target = Base.check_place(Base.yellow_start)
-                    if target != 'e':
-                        if bead.color == target.color:
-                            return 'stop green'
-                        else:
-                            Base.set_posation(bead,Base.green_start,target)
-                            li.remove(li[0])
-                            Person.next_turn()
-                            return f'move green {Base.green_start} l{target.color}'
-                    Base.set_posation(bead,Base.green_start)
-                    li.remove(li[0])
-                    Person.next_turn()
-                    return f'move green {Base.green_start} l'
-            return 'stop green'
+            if Person.turn.color == 'green':
+                if roll == 6:
+                    li = Base.out_green
+                    if li and Person.turn.color == 'green':
+                        bead = li[0]
+                        target = Base.check_place(Base.yellow_start)
+                        if target != 'e':
+                            if bead.color == target.color:
+                                return 'stop green'
+                            else:
+                                Base.set_posation(bead,Base.green_start,target)
+                                li.remove(li[0])
+                                Person.next_turn()
+                                return f'move green {Base.green_start} l{target.color}'
+                        Base.set_posation(bead,Base.green_start)
+                        li.remove(li[0])
+                        Person.next_turn()
+                        return f'move green {Base.green_start} l'
+                return 'stop green'
+            return 'stop'
 
         elif place == 28:
-            if roll == 6:
-                li = Base.out_yellow
-                if li and Person.turn.color == 'yellow':
-                    bead = li[0]
-                    target = Base.check_place(Base.yellow_start)
-                    if target != 'e':
-                        if bead.color == target.color:
-                            return 'stop yellow'
-                        else:
-                            Base.set_posation(bead,Base.yellow_start,target)
-                            li.remove(li[0])
-                            Person.next_turn()
-                            return f'move yellow {Base.yellow_start} l{target.color}'
-                    Base.set_posation(bead,Base.yellow_start)
-                    li.remove(li[0])
-                    Person.next_turn()
-                    return f'move yellow {Base.yellow_start} l'
-            return 'stop yellow'    
+            if Person.turn.color == 'yellow':
+                if roll == 6:
+                    li = Base.out_yellow
+                    if li and Person.turn.color == 'yellow':
+                        bead = li[0]
+                        target = Base.check_place(Base.yellow_start)
+                        if target != 'e':
+                            if bead.color == target.color:
+                                return 'stop yellow'
+                            else:
+                                Base.set_posation(bead,Base.yellow_start,target)
+                                li.remove(li[0])
+                                Person.next_turn()
+                                return f'move yellow {Base.yellow_start} l{target.color}'
+                        Base.set_posation(bead,Base.yellow_start)
+                        li.remove(li[0])
+                        Person.next_turn()
+                        return f'move yellow {Base.yellow_start} l'
+                return 'stop yellow'  
+            return 'stop'  
 
     bead = Base.check_place(place)
     print(Person.turn.color)

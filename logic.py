@@ -144,12 +144,6 @@ def set_player(name,color):
     list_beads = Base.get_list(color,'out') 
     beads = Bead.creat_beads(color)
     for bead in beads: list_beads.append(bead)
-    
-# def reset():
-#     Base.creat_base()
-#     player_li = []
-#     reset all
-
 
 
 Base.creat_base()

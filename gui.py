@@ -355,16 +355,16 @@ class Ui_MainWindow(object):
                                          "")
         self.pushButton_32.setText("")
         self.pushButton_32.setObjectName("pushButton_32")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(660, 500, 31, 31))
+        self.label_1 = QtWidgets.QLabel(self.centralwidget)
+        self.label_1.setGeometry(QtCore.QRect(660, 500, 31, 31))
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.label.setFont(font)
-        self.label.setStyleSheet("background-color: rgb(0, 85, 0);\n"
+        self.label_1.setFont(font)
+        self.label_1.setStyleSheet("background-color: rgb(0, 85, 0);\n"
                                  "color: rgb(255, 255, 255);\n"
                                  "border-radius: 15;")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
+        self.label_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_1.setObjectName("label_1")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(1040, 440, 31, 31))
         font = QtGui.QFont()
@@ -433,6 +433,7 @@ class Ui_MainWindow(object):
         self.pushButton_33.setIcon(icon4)
         self.pushButton_33.setIconSize(QtCore.QSize(300, 30))
         self.pushButton_33.setObjectName("pushButton_33")
+        self.pushButton_33.setDisabled(True)
         self.label_8 = QtWidgets.QLabel(self.widget)
         self.label_8.setGeometry(QtCore.QRect(10, 160, 231, 111))
         font = QtGui.QFont()
@@ -540,7 +541,7 @@ class Ui_MainWindow(object):
         self.pushButton_30.raise_()
         self.pushButton_31.raise_()
         self.pushButton_32.raise_()
-        self.label.raise_()
+        self.label_1.raise_()
         self.label_2.raise_()
         self.label_3.raise_()
         self.label_4.raise_()
@@ -625,7 +626,7 @@ class Ui_MainWindow(object):
                 roll = None
                 self.label_8.setText("-")
                 permis_roll = True
-                clicked_btn.setIcon(QtGui.QIcon(""))
+                clicked_btn.setIcon(QtGui.QIcon())
                 self.set_icon(a[1], a[2], a[3],MainWindow)
 
             elif a[0] == 'stop':
@@ -649,7 +650,7 @@ class Ui_MainWindow(object):
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_32')
                 
                 home_btn.setIcon(QtGui.QIcon(f"icon/{a[1]}Player.png"))
-                clicked_btn.setIcon(QtGui.QIcon(""))
+                clicked_btn.setIcon(QtGui.QIcon())
 
             self.turn.setText(Person.turn.name)
             self.turn.setStyleSheet(f'color:{Person.turn.color};')
@@ -671,7 +672,7 @@ class Ui_MainWindow(object):
         # QtCore.QTimer.singleShot(4500,self.clear)
         if option.startswith('l') :
             if color == 'blue':
-                self.label.setText(str(int(self.label.text())-1))
+                self.label_1.setText(str(int(self.label_1.text())-1))
             elif color == 'red':
                 self.label_4.setText(str(int(self.label_4.text())-1))
             elif color == 'green':
@@ -683,7 +684,7 @@ class Ui_MainWindow(object):
         option = option[1:]
         if option:
             if option == 'blue':
-                self.label.setText(str(int(self.label.text())+1))
+                self.label_1.setText(str(int(self.label_1.text())+1))
             elif option == 'red':
                 self.label_4.setText(str(int(self.label_4.text())+1))
             elif option == 'green':
@@ -703,7 +704,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "4"))
+        self.label_1.setText(_translate("MainWindow", "4"))
         self.label_2.setText(_translate("MainWindow", "4"))
         self.label_3.setText(_translate("MainWindow", "4"))
         self.label_4.setText(_translate("MainWindow", "4"))

@@ -17,22 +17,33 @@ def add_user():
     user = ui2.lineEdit.text()
     password = ui2.lineEdit_2.text()
     color = ui2.comboBox.currentText()
-    for player in Person.player_li:
-        if player.name == user:
-            ui2.statusbar.showMessage('user exist',3000)
-            return -1
-        if player.color == color:
-            ui2.statusbar.showMessage('color exist',3000)
-            return -1
+    # check user info
     with open('login.txt','r') as f:
         for line in f:
             if line.split()[0] == user:
                 if line.split()[1] == password:
-                    i = len(Person.player_li)+1
-                    lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
-                    lable_player.setText(f"{user}")
-                    lable_player.setStyleSheet(f'color:{color};')
-                    set_player(user,color)
+                    break
+                else:
+                    ui2.statusbar.showMessage('pasaword incorrnt',3000)
+                    return -1
+        else:
+            ui2.statusbar.showMessage('user not exist',3000)
+            return -1
+    # check user in game
+    for player in Person.player_li:
+        if player.name == user:
+            ui2.statusbar.showMessage('user exist in game',3000)
+            return -1
+        if player.color == color:
+            ui2.statusbar.showMessage('color exist in game',3000)
+            return -1
+    # set user
+    i = len(Person.player_li)+1
+    lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
+    lable_player.setText(f"{user}")
+    lable_player.setStyleSheet(f'color:{color};')
+    set_player(user,color)
+
     ui2.lineEdit.clear()
     ui2.lineEdit_2.clear()
     MainWindow2.close()

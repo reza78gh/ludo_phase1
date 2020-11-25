@@ -496,12 +496,16 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.player_4)
         self.back_grand = QtWidgets.QLabel(self.centralwidget)
         self.back_grand.setGeometry(QtCore.QRect(-130, 0, 1281, 621))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.back_grand.setFont(font)
-        self.back_grand.setText("")
         self.back_grand.setPixmap(QtGui.QPixmap("./icon/bg.jpg"))
         self.back_grand.setObjectName("back_grand")
+        self.message = QtWidgets.QLabel(self.back_grand)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.message.setFont(font)
+        self.message.setAlignment(QtCore.Qt.AlignCenter)
+        self.message.setStyleSheet('background-color: rgb(240, 50, 150,170);\nborder-radius:20;')
+        self.message.setGeometry(QtCore.QRect(790,10,321,51))
+        self.message.setVisible(False)
         self.line_2 = QtWidgets.QFrame(self.centralwidget)
         self.line_2.setGeometry(QtCore.QRect(0, 280, 261, 16))
         self.line_2.setLineWidth(4)
@@ -553,16 +557,7 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1144, 26))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setFont(QtGui.QFont('Times', 15))
-        self.statusbar.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 60, 26))
-        self.menubar.setObjectName("menubar")
+        
         self.menuGame = QtWidgets.QMenu(self.menubar)
         self.menuGame.setObjectName("menuGame")
         self.actionAdd_Player = QtWidgets.QAction(MainWindow)
@@ -578,6 +573,13 @@ class Ui_MainWindow(object):
         self.menuGame.addAction(self.actionNew_Game)
         self.menuGame.addAction(self.actionExit)
         self.menubar.addAction(self.menuGame.menuAction())
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setFont(QtGui.QFont('Times', 15))
+        self.statusbar.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -620,18 +622,23 @@ class Ui_MainWindow(object):
         clicked_btn = MainWindow.sender()
         print('roll: ', roll)
         if roll:
-            a = check_move(int(clicked_btn.objectName().split('_')[1]), roll).split()
-                
-            if a[0] == 'move':
+            result = check_move(int(clicked_btn.objectName().split('_')[1]), roll)
+            if isinstance(result,tuple):
+                move_sataus = result[0].split()
+                message = result[1]
+                self.set_message(message)
+            else:
+                move_sataus = result.split()
+            if move_sataus[0] == 'move':
                 roll = None
                 self.label_8.setText("-")
                 permis_roll = True
                 clicked_btn.setIcon(QtGui.QIcon())
-                self.set_icon(a[1], a[2], a[3],MainWindow)
+                self.set_icon(move_sataus[1], move_sataus[2], move_sataus[3],MainWindow)
 
-            elif a[0] == 'stop':
-                if len(a)>1:
-                        if moveable(a[1], roll):
+            elif move_sataus[0] == 'stop':
+                if len(move_sataus)>1:
+                        if moveable(move_sataus[1], roll):
                             print('any way')
                         else:
                             print('no way')
@@ -639,23 +646,23 @@ class Ui_MainWindow(object):
                             self.label_8.setText("-")
                             permis_roll = True
                             Person.next_turn()
-            elif a[0] == 'move_win':
-                if a[1] == 'blue':
+            elif move_sataus[0] == 'move_win':
+                if move_sataus[1] == 'blue':
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_29')
-                elif a[1] == 'red':
+                elif move_sataus[1] == 'red':
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_30')
-                elif a[1] == 'green':
+                elif move_sataus[1] == 'green':
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_31')
-                elif a[1] == 'yellow':
+                elif move_sataus[1] == 'yellow':
                     home_btn = MainWindow.findChild(QtWidgets.QPushButton,'pushButton_32')
                 
-                home_btn.setIcon(QtGui.QIcon(f"icon/{a[1]}Player.png"))
+                home_btn.setIcon(QtGui.QIcon(f"icon/{move_sataus[1]}Player.png"))
                 clicked_btn.setIcon(QtGui.QIcon())
 
             self.turn.setText(Person.turn.name)
             self.turn.setStyleSheet(f'color:{Person.turn.color};')
         else:
-            self.statusbar.showMessage('roll dick', 3000)
+            self.set_message('roll dick')
 
         player_win = check_finay_win.finaly_win()
         if check_finay_win.finaly_win():
@@ -669,7 +676,6 @@ class Ui_MainWindow(object):
     def set_icon(self, color, target, option,MainWindow):
         btn = MainWindow.findChild(QtWidgets.QPushButton, "pushButton_"+target)
         btn.setIcon(QtGui.QIcon("icon/"+color+"Player.png"))
-        # QtCore.QTimer.singleShot(4500,self.clear)
         if option.startswith('l') :
             if color == 'blue':
                 self.label_1.setText(str(int(self.label_1.text())-1))
@@ -699,6 +705,15 @@ class Ui_MainWindow(object):
             roll = dice.roll_the_dice()
             self.label_8.setText(str(roll))
             permis_roll = False
+
+    def set_message(self,msg):
+        self.message.setText(msg)
+        self.message.setVisible(True)
+        QtCore.QTimer.singleShot(1500,self.clear_message)
+        
+    def clear_message(self):
+        self.message.setText('')
+        self.message.setVisible(False)
 
 
     def retranslateUi(self, MainWindow):

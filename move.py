@@ -13,7 +13,7 @@ def check_move(place,roll):
                         target = Base.check_place(Base.blue_start)
                         if target != 'e':
                             if bead.color == target.color:
-                                return 'stop blue'
+                                return 'stop blue','You can not hit your own bead'
                             else:
                                 Base.set_posation(bead,Base.blue_start,target)
                                 li.remove(li[0])
@@ -24,8 +24,8 @@ def check_move(place,roll):
                         Person.next_turn()
                         return f'move blue {Base.blue_start} l'
                 # if roll !=6 or out empty or not turn this player
-                return 'stop blue'
-            return 'stop'
+                return 'stop blue','dice not 6'
+            return 'stop','not owner'
 
         elif place == 26:
             if Person.turn.color == 'red':
@@ -36,7 +36,7 @@ def check_move(place,roll):
                         target = Base.check_place(Base.red_start)
                         if target != 'e':
                             if bead.color == target.color:
-                                return 'stop red'
+                                return 'stop red','You can not hit your own bead'
                             else:
                                 Base.set_posation(bead,Base.red_start,target)
                                 li.remove(li[0])
@@ -46,18 +46,18 @@ def check_move(place,roll):
                         li.remove(li[0])
                         Person.next_turn()
                         return f'move red {Base.red_start} l'
-                return 'stop red'
-            return 'stop'
+                return 'stop red','dice not 6'
+            return 'stop','not owner'
         elif place == 27:
             if Person.turn.color == 'green':
                 if roll == 6:
                     li = Base.out_green
                     if li and Person.turn.color == 'green':
                         bead = li[0]
-                        target = Base.check_place(Base.yellow_start)
+                        target = Base.check_place(Base.green_start)
                         if target != 'e':
                             if bead.color == target.color:
-                                return 'stop green'
+                                return 'stop green','You can not hit your own bead'
                             else:
                                 Base.set_posation(bead,Base.green_start,target)
                                 li.remove(li[0])
@@ -67,8 +67,8 @@ def check_move(place,roll):
                         li.remove(li[0])
                         Person.next_turn()
                         return f'move green {Base.green_start} l'
-                return 'stop green'
-            return 'stop'
+                return 'stop green','dice not 6'
+            return 'stop','not owner'
 
         elif place == 28:
             if Person.turn.color == 'yellow':
@@ -79,7 +79,7 @@ def check_move(place,roll):
                         target = Base.check_place(Base.yellow_start)
                         if target != 'e':
                             if bead.color == target.color:
-                                return 'stop yellow'
+                                return 'stop yellow','You can not hit your own bead'
                             else:
                                 Base.set_posation(bead,Base.yellow_start,target)
                                 li.remove(li[0])
@@ -89,8 +89,8 @@ def check_move(place,roll):
                         li.remove(li[0])
                         Person.next_turn()
                         return f'move yellow {Base.yellow_start} l'
-                return 'stop yellow'  
-            return 'stop'  
+                return 'stop yellow','dice not 6'  
+            return 'stop','not owner'  
 
     bead = Base.check_place(place)
     print(Person.turn.color)
@@ -108,8 +108,7 @@ def check_move(place,roll):
                 Person.next_turn()
                 return f'move_win {bead.color}'
             elif check_w == 'stop':
-                print('near home')
-                return f'stop {bead.color}'
+                return f'stop {bead.color}','near home,cant move'
 
 
             target = bead.postion + roll
@@ -120,7 +119,7 @@ def check_move(place,roll):
                 bead_color = bead.color
                 color_target = who_in_target.color
                 if bead_color == color_target:
-                    return f'stop {bead.color}'  
+                    return f'stop {bead.color}','You can not hit your own bead'
                 else:
                     bead.posation = target
                     who_in_target.posation = None
@@ -139,11 +138,9 @@ def check_move(place,roll):
                 return f'move {bead.color} {target} n'
 
         else:
-            print('not owner')
-            return f'stop'
+            return f'stop','not owner'
     else:
-        print('empety home')    
-        return f'stop'
+        return f'stop','The house is empty'
 
 def moveable(color,roll):
         for bead_in_map in Base.base:

@@ -613,14 +613,11 @@ class Ui_MainWindow(object):
         self.pushButton_27.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_28.clicked.connect(lambda : self.move(MainWindow))
         self.pushButton_33.clicked.connect(self.roll_dice)
-        self.turn.setText(Person.turn.name)
-        self.turn.setStyleSheet(f'color:{Person.turn.color};')
 
     def move(self,MainWindow):
         global roll
         global permis_roll
         clicked_btn = MainWindow.sender()
-        print('roll: ', roll)
         if roll:
             result = check_move(int(clicked_btn.objectName().split('_')[1]), roll)
             if isinstance(result,tuple):
@@ -639,9 +636,9 @@ class Ui_MainWindow(object):
             elif move_sataus[0] == 'stop':
                 if len(move_sataus)>1:
                         if moveable(move_sataus[1], roll):
-                            print('any way')
+                            pass
+                            # print('exist a way')
                         else:
-                            print('no way')
                             roll = None
                             self.label_8.setText("-")
                             permis_roll = True
@@ -723,7 +720,6 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "4"))
         self.label_3.setText(_translate("MainWindow", "4"))
         self.label_4.setText(_translate("MainWindow", "4"))
-        self.turn.setText(_translate("MainWindow", "Player1"))
         self.label_7.setText(_translate("MainWindow", "TURN:"))
         self.pushButton_33.setText(_translate("MainWindow", "Roll"))
         self.label_8.setText(_translate("MainWindow", "-"))
@@ -733,9 +729,3 @@ class Ui_MainWindow(object):
         self.actionStart_Game.setText(_translate("MainWindow", "Start Game"))
         self.actionNew_Game.setText(_translate("MainWindow", "New Game"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
-        i = 0
-        for player in Person.player_li:
-            i += 1
-            lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
-            lable_player.setText(f"{player.name}")
-            lable_player.setStyleSheet(f'color:{player.color};')

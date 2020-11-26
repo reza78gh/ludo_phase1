@@ -2,7 +2,6 @@ from logic import Base ,Bead, Person
 
 
 def check_move(place,roll):
-    print('place clicked: ',place)
     if place > 24 :
         if place == 25:
             if Person.turn.color == 'blue':
@@ -93,7 +92,6 @@ def check_move(place,roll):
             return 'stop','not owner'  
 
     bead = Base.check_place(place)
-    print(Person.turn.color)
     if isinstance(bead,Bead):
         if bead.color == Person.turn.color:
             check_w = Bead.check_win(bead,roll)
@@ -103,7 +101,7 @@ def check_move(place,roll):
                 bead.in_home = True
                 in_home_list = Base.get_list(bead.color,'home')
                 in_home_list.append(bead)
-                print('win')
+                # print('win')
                 Base.base[place-1]='e'
                 Person.next_turn()
                 return f'move_win {bead.color}'
@@ -131,10 +129,7 @@ def check_move(place,roll):
                 bead.posation = target
                 Base.set_posation(bead,target)
                 Base.base[place-1]='e'
-                print(Base.base)
                 Person.next_turn()
-                print(Person.turn.name)
-                print('inhome',Base.in_home_blue,Base.in_home_red)
                 return f'move {bead.color} {target} n'
 
         else:

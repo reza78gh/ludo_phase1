@@ -53,8 +53,15 @@ ui.actionStart_Game.triggered.connect(lambda : start_game())
 ui.actionNew_Game.triggered.connect(lambda : new_game())
     
 def start_game():
+    Base.creat_base()
     if len(Person.player_li) >= 2:
+        Person.next_turn()
+        first_player = Person.player_li[0]
+        ui.turn.setText(first_player.name)
+        ui.turn.setStyleSheet(f'color:{first_player.color};')
         ui.pushButton_33.setDisabled(False)
+    else:
+        ui.statusbar.showMessage('player must more than 2',3000)
 
 def new_game():
     Base.creat_base()

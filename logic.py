@@ -1,12 +1,3 @@
-import enum
-
-class Color(enum.Enum):
-    RED = 'red'
-    GREEN = 'green'
-    BLUE = 'blue'
-    YELLOW = 'yellow'
-
-
 class Person:
     turn = None
     player_li = []
@@ -63,7 +54,6 @@ class Bead:
         return [Bead(color, i) for i in range(1, 5)]
 
 
-# todo: only one obj
 class Base:
     red_win = 6
     blue_win = 24
@@ -87,14 +77,6 @@ class Base:
     @staticmethod
     def creat_base(*args):
         Base.base = ['e' for _ in range(24)]
-        # for li in args:
-        #     for obj in li:
-        #         if isinstance(obj, Bead):
-        #             Base.li_out.append(obj)
-        #         else:
-        #             raise Exception('obj not in class Bead')
-        # print(args)
-        # #return base 
         
     @staticmethod
     def check_place(place):
@@ -145,21 +127,3 @@ def set_player(name,color):
     beads = Bead.creat_beads(color)
     for bead in beads: list_beads.append(bead)
 
-
-Base.creat_base()
-# rb = Bead.creat_beads('red')
-# bb = Bead.creat_beads('blue')
-gb = Bead.creat_beads('green')
-# yb = Bead.creat_beads('yellow')
-# ali = Person('ali','red')
-# reza = Person('reza','blue')
-ahmad = Person('ahmad','green')
-# hasan = Person('hasan','yellow')
-Person.player_li = [ahmad]
-Person.next_turn()
-# Base.out_blue = bb
-# # Base.out_red = rb
-Base.out_green = gb
-# Base.out_yellow = yb
-# print(Person.turn.color)
-# print(Base.in_home_blue)

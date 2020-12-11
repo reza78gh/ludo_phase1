@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Person:
     turn = None
     player_li = []
@@ -54,11 +57,28 @@ class Bead:
         return [Bead(color, i) for i in range(1, 5)]
 
 
+class Colors(Enum):
+    RED = 'red'
+    BLUE = 'blue'
+    GREEN = 'green'
+    YELLOW = 'yellow'
+
 class Base:
+    """
+
+    """
+    # ???
+    # Do not hard-code the colors.
+    # wins = {
+    #     Colors.RED: 6,
+    #     Colors.BLUE: 24,
+    #     ...
+    # }
     red_win = 6
     blue_win = 24
     green_win = 12
     yellow_win = 18
+    # ???
     red_start = 7
     blue_start = 1
     green_start = 13
@@ -76,6 +96,8 @@ class Base:
 
     @staticmethod
     def creat_base(*args):
+        # it is better:
+        # Base.base = [None for _ in range(24)]
         Base.base = ['e' for _ in range(24)]
         
     @staticmethod

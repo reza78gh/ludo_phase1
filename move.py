@@ -2,6 +2,7 @@ from logic import Base ,Bead, Person
 
 
 def check_move(place,roll):
+    # ???
     if place > 24 :
         if place == 25:
             if Person.turn.color == 'blue':
@@ -26,6 +27,7 @@ def check_move(place,roll):
                 return 'stop blue','dice not 6'
             return 'stop','not owner'
 
+        # ???
         elif place == 26:
             if Person.turn.color == 'red':
                 if roll == 6:
@@ -47,6 +49,8 @@ def check_move(place,roll):
                         return f'move red {Base.red_start} l'
                 return 'stop red','dice not 6'
             return 'stop','not owner'
+
+        # ???
         elif place == 27:
             if Person.turn.color == 'green':
                 if roll == 6:

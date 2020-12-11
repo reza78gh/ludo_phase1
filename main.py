@@ -1,57 +1,69 @@
-from PyQt5 import QtWidgets,QtGui
-import gui ,add_player
-from logic import Person, Base,Bead,set_player
+from PyQt5 import QtWidgets, QtGui
+import gui, add_player
+from logic import Person, Base, Bead, set_player
 import sys
 
-app = QtWidgets.QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
-ui = gui.Ui_MainWindow()
-ui.setupUi(MainWindow)
-#=================add player============
-MainWindow2 = QtWidgets.QMainWindow()
-ui2 = add_player.Ui_MainWindow2()
-ui2.setupUi(MainWindow2)
-ui.actionAdd_Player.triggered.connect(lambda : MainWindow2.show())
-ui2.pushButton.clicked.connect(lambda : add_user())
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = gui.Ui_MainWindow()
+    ui.setupUi(MainWindow)
+
+    # =================add player============
+    MainWindow2 = QtWidgets.QMainWindow()
+    ui2 = add_player.Ui_MainWindow2()
+    ui2.setupUi(MainWindow2)
+    ui.actionAdd_Player.triggered.connect(lambda: MainWindow2.show())
+    ui2.pushButton.clicked.connect(lambda: add_user())
+
+    # ===================start and new game=================
+    ui.actionStart_Game.triggered.connect(lambda: start_game())
+    ui.actionNew_Game.triggered.connect(lambda: new_game())
+
+    # ===================exit=================
+    ui.actionExit.triggered.connect(lambda: exit_game())
+
+    # ===================end=================
+    MainWindow.show()
+    sys.exit(app.exec_())
+
+
 def add_user():
     user = ui2.lineEdit.text()
     password = ui2.lineEdit_2.text()
     color = ui2.comboBox.currentText()
     # check user info
-    with open('login.txt','r') as f:
+    with open('login.txt', 'r') as f:
         for line in f:
             if line.split()[0] == user:
                 if line.split()[1] == password:
                     break
                 else:
-                    ui2.statusbar.showMessage('pasaword incorrnt',3000)
+                    ui2.statusbar.showMessage('pasaword incorrnt', 3000)
                     return -1
         else:
-            ui2.statusbar.showMessage('user not exist',3000)
+            ui2.statusbar.showMessage('user not exist', 3000)
             return -1
     # check user in game
     for player in Person.player_li:
         if player.name == user:
-            ui2.statusbar.showMessage('user exist in game',3000)
+            ui2.statusbar.showMessage('user exist in game', 3000)
             return -1
         if player.color == color:
-            ui2.statusbar.showMessage('color exist in game',3000)
+            ui2.statusbar.showMessage('color exist in game', 3000)
             return -1
     # set user
-    i = len(Person.player_li)+1
-    lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_"+str(i))
+    i = len(Person.player_li) + 1
+    lable_player = MainWindow.findChild(QtWidgets.QLabel, "player_" + str(i))
     lable_player.setText(f"{user}")
     lable_player.setStyleSheet(f'color:{color};')
-    set_player(user,color)
+    set_player(user, color)
 
     ui2.lineEdit.clear()
     ui2.lineEdit_2.clear()
     MainWindow2.close()
 
-#===================start and new game=================
-ui.actionStart_Game.triggered.connect(lambda : start_game())
-ui.actionNew_Game.triggered.connect(lambda : new_game())
-    
+
 def start_game():
     Base.creat_base()
     if len(Person.player_li) >= 2:
@@ -61,14 +73,15 @@ def start_game():
         ui.turn.setStyleSheet(f'color:{first_player.color};')
         ui.pushButton_33.setDisabled(False)
     else:
-        ui.statusbar.showMessage('player must more than 2',3000)
+        ui.statusbar.showMessage('player must more than 2', 3000)
+
 
 def new_game():
     Base.creat_base()
-    for i in range(1,25):
-        MainWindow.findChild(QtWidgets.QPushButton,"pushButton_"+str(i)).setIcon(QtGui.QIcon())
-    for i in range(1,4):
-        MainWindow.findChild(QtWidgets.QLabel,'label_'+str(i)).setText('4')
+    for i in range(1, 25):
+        MainWindow.findChild(QtWidgets.QPushButton, "pushButton_" + str(i)).setIcon(QtGui.QIcon())
+    for i in range(1, 4):
+        MainWindow.findChild(QtWidgets.QLabel, 'label_' + str(i)).setText('4')
     Base.in_home_blue = []
     Base.in_home_red = []
     Base.in_home_green = []
@@ -77,8 +90,8 @@ def new_game():
     Base.out_red = []
     Base.out_green = []
     Base.out_yellow = []
-#===================exit=================
-ui.actionExit.triggered.connect(lambda : exit_game())
+
+
 def exit_game():
     msgBox = QtWidgets.QMessageBox()
     msgBox.setIcon(QtWidgets.QMessageBox.Warning)
@@ -87,10 +100,3 @@ def exit_game():
     msgBox.setStandardButtons(QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Yes)
     if msgBox.exec_() == QtWidgets.QMessageBox.Yes:
         MainWindow.close()
-
-#===================end=================
-MainWindow.show()
-sys.exit(app.exec_())
-
-
-
